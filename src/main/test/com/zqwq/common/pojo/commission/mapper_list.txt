@@ -1,0 +1,3 @@
+<typeAlias type="com.zqwq.common.pojo.commission.domain.CommissionRule" alias="CommissionRule" />
+
+<mapper resource="mapper/TCommissionRuleMapper.xml" />
