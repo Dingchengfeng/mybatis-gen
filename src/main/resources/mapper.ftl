@@ -13,53 +13,39 @@
 		id,<include refid="insertColumns"/>
 	</sql>
 
-	<insert id="insert" <#if tableinfo.shouldUseGeneratedKeys> useGeneratedKeys="true" keyProperty="id"</#if> >
+	<insert id="insertBatch" <#if tableinfo.shouldUseGeneratedKeys> useGeneratedKeys="true" keyProperty="id"</#if> >
 		INSERT INTO
 		${tableinfo.tableName?lower_case} (<include refid="insertColumns"/>)
 		VALUES
+        <foreach collection ="list" item="item" separator =",">
 		(
 			<#if !tableinfo.shouldUseGeneratedKeys>
 				<#list tableinfo.pkColList as item>
-			${r"#"}{${item.columName}},
+			${r"#"}{item.${item.columName}},
 				</#list>
 			</#if>
 			<#list tableinfo.npkColList as item>
-			${r"#"}{${item.columName}}<#if item_has_next>,</#if>
+			${r"#"}{item.${item.columName}}<#if item_has_next>,</#if>
 			</#list>
 		)
+        </foreach >
 	</insert>
 
-	<insert id="insertSelective" <#if tableinfo.shouldUseGeneratedKeys> useGeneratedKeys="true" keyProperty="id"</#if> >
-		INSERT INTO ${tableinfo.tableName?lower_case}
-		<trim prefix="(" suffix=")" suffixOverrides=",">
+    <insert id="insert" <#if tableinfo.shouldUseGeneratedKeys> useGeneratedKeys="true" keyProperty="id"</#if> >
+        INSERT INTO
+		${tableinfo.tableName?lower_case} (<include refid="insertColumns"/>)
+        VALUES
+        (
 			<#if !tableinfo.shouldUseGeneratedKeys>
 				<#list tableinfo.pkColList as item>
-			<if test="${item.columName} != null">
-				${item.columName},
-			</if>
+					${r"#"}{${item.columName}},
 				</#list>
 			</#if>
 			<#list tableinfo.npkColList as item>
-			<if test="${item.columName} != null">
-				${item.columName},
-			</if>
+				${r"#"}{${item.columName}}<#if item_has_next>,</#if>
 			</#list>
-		</trim>
-		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
-			<#if !tableinfo.shouldUseGeneratedKeys>
-				<#list tableinfo.pkColList as item>
-			<if test="${item.columName} != null">
-				${r"#"}{${item.columName}},
-			</if>
-				</#list>
-			</#if>
-			<#list tableinfo.npkColList as item>
-			<if test="${item.columName} != null">
-				${r"#"}{${item.columName}},
-			</if>
-			</#list>
-		</trim>
-	</insert>
+        )
+    </insert>
 
 	<update id="updateByPrimaryKeySelective">
 		UPDATE ${tableinfo.tableName?lower_case}

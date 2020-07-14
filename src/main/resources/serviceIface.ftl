@@ -7,7 +7,7 @@ public interface ${tableinfo.tableNameFt?cap_first}Mapper {
 
 	boolean insert(${tableinfo.tableNameFt?cap_first}DO ${tableinfo.tableNameFt});
 
-	boolean insertSelective(${tableinfo.tableNameFt?cap_first}DO ${tableinfo.tableNameFt});
+	boolean insertBatch(List<${tableinfo.tableNameFt?cap_first}DO> bookTimeSettingList);
 
 	boolean updateByPrimaryKeySelective(${tableinfo.tableNameFt?cap_first}DO ${tableinfo.tableNameFt});
 

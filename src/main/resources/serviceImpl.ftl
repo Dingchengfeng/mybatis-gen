@@ -22,12 +22,6 @@ public class ${tableinfo.tableNameFt?cap_first}DAOImpl extends SqlSessionDaoSupp
 	}
 
 	@Override
-	public boolean insertSelective(${tableinfo.tableNameFt?cap_first} ${tableinfo.tableNameFt}) {
-		int count = myBatisDAO.insert("${tableinfo.tableNameFt}.insert${tableinfo.tableNameFt?cap_first}Selective", ${tableinfo.tableNameFt});
-		return count > 0;
-	}
-
-	@Override
 	public boolean update(${tableinfo.tableNameFt?cap_first} ${tableinfo.tableNameFt}) {
 		int count = myBatisDAO.update("${tableinfo.tableNameFt}.update${tableinfo.tableNameFt?cap_first}", ${tableinfo.tableNameFt});
 		return count > 0;
